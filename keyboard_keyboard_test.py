@@ -10,7 +10,14 @@ import keyboard
 while True:
     # Wait for the next event.
     event = keyboard.read_event()
-    if event.event_type == keyboard.KEY_DOWN and event.name == 'space':
-        print('space was pressed')
+    # if event.event_type == keyboard.KEY_DOWN and event.name == 'up':
+    #     print('up was pressed')
+    # if event.event_type == keyboard.KEY_UP and event.name == 'up':
+    #     print('up was released')
+    if event.name == 'up':
+        if event.event_type == keyboard.KEY_DOWN:
+            print('up was pressed')
+        if event.event_type == keyboard.KEY_UP:
+            print('up was released')
 # print("Press ESC to stop.")
 # keyboard.wait('esc')
