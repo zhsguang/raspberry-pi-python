@@ -21,6 +21,15 @@ led2_state = False
 def hello():
     return render_template("index.html")
 
+@app.route("/joystick")
+def joystick():
+    return render_template("joystick.html")
+
+@app.route("/test")
+def test():
+    return "This is a test"
+    # return render_template("joystick.html")
+
 @app.route("/status.json")
 def status():
     buttons = a_star.read_buttons()

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutorial on Flask: A Web socket example</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+// sending a connect request to the server.
+            socket = io.connect('http://192.168.1.21:5000');
+            socket.on("connect", () => {
+                console.log(socket.connected); // true
+            });
+            socket.on("disconnect", () => {
+                console.log(socket.connected); // false
+            });
+            socket.on("my event", (data) => {
+                // $('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ').html());
+                console.log("my event:" + data['data']);
+                $('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ' + data['data']).html());
+            });
+            socket.on("my_message", (data) => {
+                console.log(data); // false
+                var enc = JSON.parse(data)
+                // $('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ' + enc.enc1).html());
+                $('#log').html('Enc1:' + enc.enc1 + ', Enc2:' + enc.enc2);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            var name = event.key;
+            var code = event.code;
+            // Alert the key name and key code on keydown
+            console.log(code);
+            if (code == "ArrowUp") {
+                console.log("up pressed")
+                socket.emit("my_message", "up pressed");
+                socket.emit("my_message", "get_status");
+                // socket.emit('my event', function (connectMsg) {
+                //     $('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ' + connectMsg.data).html());
+                // });
+                // setMotors(-300, -300)
+            }
+            if (code == "ArrowDown") {
+                console.log("down pressed")
+                socket.emit("my_message", "down pressed");
+                // setMotors(300, 300)
+            }
+            if (code == "ArrowLeft") {
+                console.log("left pressed")
+                socket.emit("my_message", "left pressed");
+                // setMotors(-200, 200)
+            }
+            if (code == "ArrowRight") {
+                console.log("right pressed")
+                socket.emit("my_message", "right pressed");
+                // setMotors(200, -200)
+            }
+            if (code == "KeyW") {
+                console.log("W pressed")
+                socket.emit("my_message", "W pressed");
+                // setMotors(0, 0)
+            }
+            if (code == "KeyA") {
+                console.log("A pressed")
+                socket.emit("my_message", "A pressed");
+                // setMotors(0, 0)
+            }
+            if (code == "KeyD") {
+                console.log("D pressed")
+                socket.emit("my_message", "D pressed");
+                // setMotors(0, 0)
+            }
+            if (code == "KeyW") {
+                console.log("W pressed")
+                socket.emit("my_message", "W pressed");
+                // setMotors(0, 0)
+            }
+            if (code == "KeyS") {
+                console.log("S pressed")
+                socket.emit("my_message", "S pressed");
+                // setMotors(0, 0)
+            }
+            if (code == "KeyE") {
+                console.log("E pressed")
+                socket.emit("my_message", "servo reset");
+                // setMotors(0, 0)
+            }
+        }, false);
+
+        document.addEventListener('keyup', (event) => {
+            var name = event.key;
+            var code = event.code;
+            // Alert the key name and key code on keydown
+            console.log(code);
+            if (code == "ArrowUp") {
+                console.log("up released")
+                socket.emit("my_message", "up released");
+                // setMotors(0, 0)
+            }
+            if (code == "ArrowDown") {
+                console.log("down released")
+                socket.emit("my_message", "down released");
+                // setMotors(0, 0)
+            }
+            if (code == "ArrowLeft") {
+                console.log("left released")
+                socket.emit("my_message", "left released");
+                // setMotors(0, 0)
+            }
+            if (code == "ArrowRight") {
+                console.log("right released")
+                socket.emit("my_message", "right released");
+                // setMotors(0, 0)
+            }
+            if (code == "KeyW") {
+                console.log("W released")
+                socket.emit("my_message", "W released");
+                // setMotors(0, 0)
+            }
+
+        }, false);
+    </script>
+</head>
+</head>
+<body>
+<h1>Romi Robot</h1>
+<h2>Message Received:</h2>
+<div id="log"></div>
+</body>
+</html>
